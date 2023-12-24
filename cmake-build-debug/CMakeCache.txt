@@ -261,6 +261,12 @@ fmt_DIR:PATH=/nix/store/nb0cb0fvwzlgipbdwmar0d33p0853j06-fmt-10.1.1-dev/lib/cmak
 //Path to a library.
 pkgcfg_lib_SDL2_SDL2:FILEPATH=/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib/libSDL2.so
 
+//Path to a library.
+pkgcfg_lib_SDL2_TTF_SDL2:FILEPATH=/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib/libSDL2.so
+
+//Path to a library.
+pkgcfg_lib_SDL2_TTF_SDL2_ttf:FILEPATH=/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib/libSDL2_ttf.so
+
 
 ########################
 # INTERNAL cache entries
@@ -470,6 +476,41 @@ SDL2_STATIC_LIBS:INTERNAL=
 SDL2_STATIC_LIBS_L:INTERNAL=
 SDL2_STATIC_LIBS_OTHER:INTERNAL=
 SDL2_STATIC_LIBS_PATHS:INTERNAL=
+SDL2_TTF_CFLAGS:INTERNAL=-D_REENTRANT;-I/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include;-I/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include/SDL2;-I/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/include/SDL2
+SDL2_TTF_CFLAGS_I:INTERNAL=
+SDL2_TTF_CFLAGS_OTHER:INTERNAL=-D_REENTRANT
+SDL2_TTF_FOUND:INTERNAL=1
+SDL2_TTF_INCLUDEDIR:INTERNAL=/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/include
+SDL2_TTF_INCLUDE_DIRS:INTERNAL=/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include;/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include/SDL2;/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/include/SDL2
+SDL2_TTF_LDFLAGS:INTERNAL=-L/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;-L/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib;-lSDL2_ttf;-Wl,-rpath,/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;-Wl,--enable-new-dtags;-lSDL2
+SDL2_TTF_LDFLAGS_OTHER:INTERNAL=-Wl,-rpath,/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;-Wl,--enable-new-dtags
+SDL2_TTF_LIBDIR:INTERNAL=/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib
+SDL2_TTF_LIBRARIES:INTERNAL=SDL2_ttf;SDL2
+SDL2_TTF_LIBRARY_DIRS:INTERNAL=/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib
+SDL2_TTF_LIBS:INTERNAL=
+SDL2_TTF_LIBS_L:INTERNAL=
+SDL2_TTF_LIBS_OTHER:INTERNAL=
+SDL2_TTF_LIBS_PATHS:INTERNAL=
+SDL2_TTF_MODULE_NAME:INTERNAL=SDL2_ttf
+SDL2_TTF_PREFIX:INTERNAL=/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2
+SDL2_TTF_SDL2_ttf_INCLUDEDIR:INTERNAL=
+SDL2_TTF_SDL2_ttf_LIBDIR:INTERNAL=
+SDL2_TTF_SDL2_ttf_PREFIX:INTERNAL=
+SDL2_TTF_SDL2_ttf_VERSION:INTERNAL=
+SDL2_TTF_STATIC_CFLAGS:INTERNAL=-D_REENTRANT;-I/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include;-I/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include/SDL2;-I/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/include/SDL2
+SDL2_TTF_STATIC_CFLAGS_I:INTERNAL=
+SDL2_TTF_STATIC_CFLAGS_OTHER:INTERNAL=-D_REENTRANT
+SDL2_TTF_STATIC_INCLUDE_DIRS:INTERNAL=/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include;/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include/SDL2;/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/include/SDL2
+SDL2_TTF_STATIC_LDFLAGS:INTERNAL=-L/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;-L/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib;-lSDL2_ttf;-Wl,-rpath,/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;-Wl,--enable-new-dtags;-lSDL2;-lm;-lX11;-lXext;-lXcursor;-lXi;-lXfixes;-lXrandr;-lXss;-lpthread;-lrt
+SDL2_TTF_STATIC_LDFLAGS_OTHER:INTERNAL=-Wl,-rpath,/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;-Wl,--enable-new-dtags
+SDL2_TTF_STATIC_LIBDIR:INTERNAL=
+SDL2_TTF_STATIC_LIBRARIES:INTERNAL=SDL2_ttf;SDL2;m;X11;Xext;Xcursor;Xi;Xfixes;Xrandr;Xss;pthread;rt
+SDL2_TTF_STATIC_LIBRARY_DIRS:INTERNAL=/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib;/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib
+SDL2_TTF_STATIC_LIBS:INTERNAL=
+SDL2_TTF_STATIC_LIBS_L:INTERNAL=
+SDL2_TTF_STATIC_LIBS_OTHER:INTERNAL=
+SDL2_TTF_STATIC_LIBS_PATHS:INTERNAL=
+SDL2_TTF_VERSION:INTERNAL=2.20.2
 SDL2_VERSION:INTERNAL=2.26.5
 SDL2_sdl2_INCLUDEDIR:INTERNAL=
 SDL2_sdl2_LIBDIR:INTERNAL=
@@ -479,6 +520,7 @@ SDL2_sdl2_VERSION:INTERNAL=
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 __pkg_config_arguments_SDL2:INTERNAL=REQUIRED;sdl2
 __pkg_config_checked_SDL2:INTERNAL=1
+__pkg_config_checked_SDL2_TTF:INTERNAL=1
 //ADVANCED property for variable: boost_container_DIR
 boost_container_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_graph_DIR
@@ -489,5 +531,9 @@ boost_headers_DIR-ADVANCED:INTERNAL=1
 boost_regex_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_SDL2_SDL2
 pkgcfg_lib_SDL2_SDL2-ADVANCED:INTERNAL=1
-prefix_result:INTERNAL=/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib
+//ADVANCED property for variable: pkgcfg_lib_SDL2_TTF_SDL2
+pkgcfg_lib_SDL2_TTF_SDL2-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_SDL2_TTF_SDL2_ttf
+pkgcfg_lib_SDL2_TTF_SDL2_ttf-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib
 
