@@ -65,14 +65,14 @@ void MazeVisualizer::clean() {
 
 }
 void MazeVisualizer::renderMaze() {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // Red color
-    SDL_Rect rect = {5, 5, 20, 20}; // Example rectangle
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_Rect rect = {5, 5, 20, 20};
     SDL_RenderFillRect(renderer, &rect);
 //    if(maze){
 //        fmt::print("Rendering maze...\n");
 //        const auto& cells = maze->getMaze();
-//        int cellWidth = windowWidth / maze->getCols(); // Assuming you have windowWidth member
-//        int cellHeight = windowHeight / maze->getRows(); // Assuming you have windowHeight member
+//        int cellWidth = windowWidth / maze->getCols();
+//        int cellHeight = windowHeight / maze->getRows();
 //        fmt::print("Cell dimensions: {}x{}\n", cellWidth, cellHeight);
 //
 //        for (std::size_t r = 0; r < cells.size(); ++r) {
@@ -82,7 +82,7 @@ void MazeVisualizer::renderMaze() {
 //                int y = static_cast<int>(r) * cellHeight;
 //
 //                // Set the draw color for the walls, e.g., black
-//                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Assuming renderer is a member of Visualizer
+//                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 //
 //                // Draw the walls as needed
 //                if (cell.topWall) {
