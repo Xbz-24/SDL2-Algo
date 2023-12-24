@@ -2,18 +2,18 @@
 // Created by daily on 23-12-23.
 //
 
-#ifndef ALGOVISUALIZER_MAZEVISUALIZER_HPP
-#define ALGOVISUALIZER_MAZEVISUALIZER_HPP
+#ifndef ALGOVISUALIZER_VISUALIZER_HPP
+#define ALGOVISUALIZER_VISUALIZER_HPP
 #include "SDL2/SDL.h"
 #include <iostream>
 #include "Maze.hpp"
 
-class MazeVisualizer {
+class Visualizer {
 public:
-    MazeVisualizer(const MazeVisualizer&) = delete;
-    MazeVisualizer& operator=(const MazeVisualizer&) = delete;
-    MazeVisualizer();
-    ~MazeVisualizer();
+    Visualizer(const Visualizer&) = delete;
+    Visualizer& operator=(const Visualizer&) = delete;
+    Visualizer();
+    ~Visualizer();
     void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
     void handleEvents();
     void update();
@@ -35,4 +35,4 @@ private:
 };
 
 
-#endif //ALGOVISUALIZER_MAZEVISUALIZER_HPP
+#endif //ALGOVISUALIZER_VISUALIZER_HPP

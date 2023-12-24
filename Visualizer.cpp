@@ -2,17 +2,17 @@
 // Created by daily on 23-12-23.
 //
 
-#include "MazeVisualizer.hpp"
+#include "Visualizer.hpp"
 #include <fmt/core.h>
 
-MazeVisualizer::MazeVisualizer() : maze(nullptr) , isRunning(false), window(nullptr), renderer(nullptr), windowWidth(0), windowHeight(0) {
+Visualizer::Visualizer() : maze(nullptr) , isRunning(false), window(nullptr), renderer(nullptr), windowWidth(0), windowHeight(0) {
 
 }
 
-MazeVisualizer::~MazeVisualizer() {
+Visualizer::~Visualizer() {
 }
 
-void MazeVisualizer::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen){
+void Visualizer::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen){
     windowHeight = height;
     windowWidth = width;
     Uint32 flags = fullscreen ? SDL_WINDOW_MAXIMIZED: 0;
@@ -39,7 +39,7 @@ void MazeVisualizer::init(const char* title, int xpos, int ypos, int width, int 
         isRunning = false;
     }
 }
-void MazeVisualizer::handleEvents() {
+void Visualizer::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
     switch(event.type){
@@ -50,21 +50,21 @@ void MazeVisualizer::handleEvents() {
             break;
     }
 }
-void MazeVisualizer::update() {
+void Visualizer::update() {
 
 }
-void MazeVisualizer::render() {
+void Visualizer::render() {
     fmt::print("Rendering frame...\n");
     SDL_RenderClear(renderer);
     renderMaze();
     SDL_RenderPresent(renderer);
     fmt::print("Frame rendered.\n");
 }
-void MazeVisualizer::clean() {
+void Visualizer::clean() {
     SDL_DestroyWindow(window);
 
 }
-void MazeVisualizer::renderMaze() {
+void Visualizer::renderMaze() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_Rect rect = {5, 5, 20, 20};
     SDL_RenderFillRect(renderer, &rect);
@@ -104,6 +104,6 @@ void MazeVisualizer::renderMaze() {
 //    }
 }
 
-void MazeVisualizer::setMaze(Maze *m) {
+void Visualizer::setMaze(Maze *m) {
     maze = m;
 }

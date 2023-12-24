@@ -11,7 +11,7 @@ include_directories(${SDL2_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 add_library(boost_container_wrapper INTERFACE)
 target_link_libraries(boost_container_wrapper INTERFACE Boost::container)
 
-add_executable(AlgoVisualizer main.cpp MazeVisualizer.cpp MazeVisualizer.hpp Maze.cpp Maze.hpp)
+add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp)
 
 target_link_libraries(AlgoVisualizer ${SDL2_LIBRARIES} Boost::graph boost_container_wrapper fmt::fmt)
 
