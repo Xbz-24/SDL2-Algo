@@ -49,48 +49,46 @@ void Maze::generateMazeRecursive(std::size_t r, std::size_t c) {
     std::random_shuffle(directions.begin(), directions.end());
     m_maze[r][c].visited = true;
 
-    for(auto [dr, dc] : directions)
-    {
-        if (dr < 0)
-        {
-            if (static_cast<std::size_t>(-dr) > r) continue; // Underflow check
+    for(auto [dr, dc] : directions){
+        if (dr < 0){
+            // Underflow check
+            if (static_cast<std::size_t>(-dr) > r)
+                continue;
         }
-        else
-        {
-            if (dr >= 0 && r > std::numeric_limits<std::size_t>::max() - static_cast<std::size_t>(dr)) continue; // Overflow check
+        else{
+            // Overflow check
+            if (dr >= 0 && r > std::numeric_limits<std::size_t>::max() - static_cast<std::size_t>(dr))
+                continue;
         }
 
-        if (dc < 0)
-        {
-            if (static_cast<std::size_t>(-dc) > c) continue; // Underflow check
+        if (dc < 0){
+            // Underflow check
+            if (static_cast<std::size_t>(-dc) > c)
+                continue;
         }
-        else
-        {
-            if (dc >= 0 && c > std::numeric_limits<std::size_t>::max() - static_cast<std::size_t>(dc)) continue; // Overflow check
+        else{
+            // Overflow check
+            if (dc >= 0 && c > std::numeric_limits<std::size_t>::max() - static_cast<std::size_t>(dc))
+                continue;
         }
 
         std::size_t newR = r + static_cast<std::size_t>(dr);
         std::size_t newC = c + static_cast<std::size_t>(dc);
 
-        if(newR < static_cast<std::size_t>(m_rows) && newC < static_cast<std::size_t>(m_cols) && !m_maze[newR][newC].visited)
-        {
-            if(dr == -1)
-            {
+        if(newR < static_cast<std::size_t>(m_rows) && newC < static_cast<std::size_t>(m_cols) && !m_maze[newR][newC].visited){
+            if(dr == -1){
                 m_maze[r][c].topWall = false;
                 m_maze[newR][newC].bottomWall = false;
             }
-            if(dr == 1)
-            {
+            if(dr == 1){
                 m_maze[r][c].bottomWall = false;
                 m_maze[newR][newC].topWall = false;
             }
-            if(dc == -1)
-            {
+            if(dc == -1){
                 m_maze[r][c].leftWall = false;
                 m_maze[newR][newC].rightWall = false;
             }
-            if(dc == 1)
-            {
+            if(dc == 1){
                 m_maze[r][c].rightWall = false;
                 m_maze[newR][newC].leftWall = false;
             }
