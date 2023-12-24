@@ -7,6 +7,7 @@ in
 pkgs.mkShell {
   buildInputs = [
       pkgs.SDL2
+      pkgs.SDL2_ttf
       pkgs.pkg-config
       pkgs.boost
       pkgs.cmake

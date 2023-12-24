@@ -240,6 +240,9 @@ PKG_CONFIG_EXECUTABLE:FILEPATH=/nix/store/7l5gbdz3rcab57r24arg61i4vavpf2cz-pkg-c
 //The directory containing a CMake configuration file for SDL2.
 SDL2_DIR:PATH=/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/lib/cmake/SDL2
 
+//The directory containing a CMake configuration file for SDL2_ttf.
+SDL2_ttf_DIR:PATH=/nix/store/07vqhbcjizpd22iyr32dsdvn75mjprmb-SDL2_ttf-2.20.2/lib/cmake/SDL2_ttf
+
 //The directory containing a CMake configuration file for boost_container.
 boost_container_DIR:PATH=/nix/store/1kprdajc7d9s1lvcn8vddqf4gvbp8cxw-boost-1.79.0-dev/lib/cmake/boost_container-1.79.0
 
