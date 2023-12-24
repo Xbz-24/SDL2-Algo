@@ -1,0 +1,420 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "AlgoVisualizer"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"target_link_libraries",
+			"set_property",
+			"find_package",
+			"boost_find_component",
+			"target_compile_options",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"/nix/store/1kprdajc7d9s1lvcn8vddqf4gvbp8cxw-boost-1.79.0-dev/lib/cmake/boost_graph-1.79.0/boost_graph-config.cmake",
+			"/nix/store/1kprdajc7d9s1lvcn8vddqf4gvbp8cxw-boost-1.79.0-dev/lib/cmake/Boost-1.79.0/BoostConfig.cmake",
+			"/nix/store/jzfa947q6wvkwmy7f3rnll66gzwv9m9s-cmake-3.25.3/share/cmake-3.25/Modules/FindBoost.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 16,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 6,
+				"parent" : 0
+			},
+			{
+				"file" : 3,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 3,
+				"line" : 594,
+				"parent" : 4
+			},
+			{
+				"file" : 2,
+				"parent" : 5
+			},
+			{
+				"command" : 4,
+				"file" : 2,
+				"line" : 262,
+				"parent" : 6
+			},
+			{
+				"command" : 3,
+				"file" : 2,
+				"line" : 141,
+				"parent" : 7
+			},
+			{
+				"file" : 1,
+				"parent" : 8
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 105,
+				"parent" : 9
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 44,
+				"parent" : 0
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 9,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -fdiagnostics-color=always"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-pedantic"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Werror"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Weffc++"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wconversion"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wsign-conversion"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wmisleading-indentation"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wduplicated-cond"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wduplicated-branches"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wlogical-op"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wnull-dereference"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wuseless-cast"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wdouble-promotion"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wformat=2"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wshadow"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wfloat-equal"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wcast-align"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wcast-qual"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wwrite-strings"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wmissing-declarations"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Woverloaded-virtual"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wnoexcept"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wnon-virtual-dtor"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wstrict-overflow=5"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wswitch-default"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wswitch-enum"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Winit-self"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wredundant-decls"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wundef"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Winline"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wunreachable-code"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wdeprecated"
+				},
+				{
+					"backtrace" : 12,
+					"fragment" : "-Wsuggest-override"
+				},
+				{
+					"fragment" : "-std=gnu++23"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "BOOST_CONTAINER_DYN_LINK"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "BOOST_CONTAINER_NO_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "BOOST_GRAPH_DYN_LINK"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "BOOST_GRAPH_NO_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "BOOST_REGEX_DYN_LINK"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "BOOST_REGEX_NO_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "FMT_SHARED"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 13,
+					"isSystem" : true,
+					"path" : "/nix/store/rvldz5w9fkhdq1ycg5x7l3s4kzzw8w7r-SDL2-2.26.5-dev/include/SDL2"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/nix/store/nb0cb0fvwzlgipbdwmar0d33p0853j06-fmt-10.1.1-dev/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					2
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				3
+			]
+		}
+	],
+	"id" : "AlgoVisualizer::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/nix/store/3x3fyg3faqxi3i8ns4yvb7rgmw924rkp-fmt-10.1.1/lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/nix/store/yfhqdcv89fhpn79zxwz5i9jy70axkhp8-SDL2-2.26.5/lib/libSDL2.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/nix/store/i4mrnwfzlfxpcz43zpyggzw78lm96w1d-boost-1.79.0/lib/libboost_graph.so.1.79.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/nix/store/3x3fyg3faqxi3i8ns4yvb7rgmw924rkp-fmt-10.1.1/lib/libfmt.so.10.1.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 10,
+				"fragment" : "/nix/store/i4mrnwfzlfxpcz43zpyggzw78lm96w1d-boost-1.79.0/lib/libboost_regex.so.1.79.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 11,
+				"fragment" : "/nix/store/i4mrnwfzlfxpcz43zpyggzw78lm96w1d-boost-1.79.0/lib/libboost_container.so.1.79.0",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "AlgoVisualizer",
+	"nameOnDisk" : "AlgoVisualizer",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				3
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				2,
+				4
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "MazeVisualizer.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "MazeVisualizer.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Maze.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Maze.hpp",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "EXECUTABLE"
+}
