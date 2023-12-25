@@ -15,8 +15,8 @@ public:
     MazeRenderer(std::shared_ptr<Maze> maze, SDL_Renderer* renderer);
     void render(int windowWidth, int windowHeight);
 private:
-    std::shared_ptr<Maze> maze;
-    SDL_Renderer* renderer;
+    std::shared_ptr<Maze> maze_;
+    SDL_Renderer* sdlRenderer_;
     void drawCell(std::size_t row, std::size_t col, int startX, int startY, int cellWidth, int cellHeight, int wallThickness);
 };
 
