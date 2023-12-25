@@ -1,11 +1,22 @@
-//
-// Created by daily on 24-12-23.
-//
-
+/**
+ * @file FPSCounter.hpp
+ * @brief Definition of the FPSCounter class for frame rate calculation and rendering.
+ * @date Created on 24-12-23
+ * @author Renato Chavez
+ */
 #ifndef ALGOVISUALIZER_FPSCOUNTER_HPP
 #define ALGOVISUALIZER_FPSCOUNTER_HPP
+/**
+ * @brief Includes SDL2 main header for rendering functionalities.
+ */
 #include "SDL2/SDL.h"
+/**
+ * @brief Includes SDL2 extension for TrueType font rendering.
+ */
 #include "SDL2/SDL_ttf.h"
+/**
+ * @brief
+ */
 #include <string>
 
 /**
@@ -39,11 +50,29 @@ public:
      */
     void render();
 private:
+    /**
+     * @brief SDL_Renderer used for rendering the FPS text.
+     */
     SDL_Renderer* renderer;
+    /**
+     * @brief TTF_Font used for displaying the FPS text.
+     */
     TTF_Font* font;
+    /**
+     * @brief Timestamp of the last frame update.
+     */
     Uint32 lastTime;
+    /**
+     * @brief Count of frames rendered since the last update.
+     */
     int frameCount;
+    /**
+     * @brief Calculated frames per second.
+     */
     float fps;
+    /**
+     * @brief Color used for rendering the FPS text.
+     */
     SDL_Color textColor;
 };
 #endif //ALGOVISUALIZER_FPSCOUNTER_HPP

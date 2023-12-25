@@ -1,13 +1,23 @@
-//
-// Created by daily on 24-12-23.
-//
-
+/**
+ * @file Maze.cpp
+ * @brief
+ * @date Created on 24-12-23
+ * @author Renato Chavez
+ */
 #include "Maze.hpp"
 #include <algorithm>
 #include <limits>
 #include <utility>
 #include <fmt/core.h>
 
+/**
+ * @brief Constructs a Maze object and initializes its structure.
+ *
+ * This constructor initializes the maze with given dimensions, then generates the maze.
+ *
+ * @param rows Number of rows in the maze.
+ * @param cols Number of columns in the maze.
+ */
 Maze::Maze(int rows, int cols) : maze_(static_cast<unsigned long>(rows), std::vector<Cell>(
         static_cast<unsigned long>(cols))), rows_(rows) , cols_(cols) {
     fmt::print("Creating Maze of size {}x{}\n", rows, cols);
@@ -15,7 +25,11 @@ Maze::Maze(int rows, int cols) : maze_(static_cast<unsigned long>(rows), std::ve
     generateMaze();
     fmt::print("Maze created and generated.\n");
 }
-
+/**
+ * @brief Initializes the maze grid with default cell values.
+ *
+ * Sets up each cell in the maze grid with default wall values and visited status.
+ */
 void Maze::initializeMaze() {
     maze_.resize(static_cast<std::size_t>(rows_), std::vector<Cell>(static_cast<std::size_t>(cols_)));
     for (auto& row : maze_) {
@@ -28,7 +42,11 @@ void Maze::initializeMaze() {
         }
     }
 }
-
+/**
+ * @brief Public interface to generate the maze structure.
+ *
+ * Initiates the recursive maze generation algorithm.
+ */
 void Maze::generateMaze() {
     generateMazeRecursive(0, 0);
     for (int r = 0; r < std::min(3, rows_); ++r) {
@@ -42,7 +60,14 @@ void Maze::generateMaze() {
         }
     }
 }
-
+/**
+ * @brief Recursive algorithm to generate the maze.
+ *
+ * Randomly selects a direction and carves a path in the maze grid recursively.
+ *
+ * @param r Row index for the current cell.
+ * @param c Column index for the current cell.
+ */
 void Maze::generateMazeRecursive(std::size_t r, std::size_t c) {
     fmt::print("Generating maze_ at cell [{}, {}]\n", r, c);
     std::vector<std::pair<std::ptrdiff_t , std::ptrdiff_t>> directions = {{1,0}, {-1,0}, {0,1},{0,-1}};
@@ -96,7 +121,11 @@ void Maze::generateMazeRecursive(std::size_t r, std::size_t c) {
         }
     }
 }
-
+/**
+ * @brief Returns a constant reference to the maze grid.
+ *
+ * @return Constant reference to the maze's 2D cell grid.
+ */
 const std::vector<std::vector<Maze::Cell>>& Maze::getMaze() const {
     return maze_;
 }
