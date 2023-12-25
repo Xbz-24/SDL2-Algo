@@ -1,8 +1,4 @@
-#include <iostream>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/graph_utility.hpp>
-#include <fmt/core.h>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include "Visualizer.hpp"
 #include "Maze.hpp"
 
