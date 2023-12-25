@@ -5,9 +5,9 @@
  * @author Renato Chavez
  */
 #include "Visualizer.hpp"
+#include "Constants.hpp"
 #include <fmt/core.h>
 #include <boost/log/trivial.hpp>
-
 #include <utility>
 /**
  * @brief Constructs a Visualizer object.
@@ -34,7 +34,8 @@ Visualizer::Visualizer(const char* title, int xpos, int ypos, int width, int hei
         windowTitle_(title),
         windowPosX_(xpos),
         windowPosY_(ypos),
-        isFullscreen_(fullscreen){
+        isFullscreen_(fullscreen),
+        squares_(){
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(info) << "Initializing Visualizer with title: " << title;
 #endif
@@ -75,18 +76,17 @@ void Visualizer::initializeSDLComponents(){
     createWindow();
     createRenderer();
     initializeTTF();
-    mazeRenderer_ = std::make_unique<MazeRenderer>(maze_, sdlRenderer_);
     fpsCounter_ = FPSCounter(sdlRenderer_, fpsFont_);
 }
 /**
  * @brief Initializes the SDL library.
  */
 void Visualizer::initializeSDL(){
-    if(SDL_Init(SDL_INIT_EVERYTHING) != 0){
+    if(SDL_Init(Constants::SDL_INIT_FLAGS) != 0){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(error) << "SDL could not initialize" << SDL_GetError();
 #endif
-        throw std::runtime_error(fmt::format("SDL could not initialize: {}", SDL_GetError()));
+        throw std::runtime_error(fmt::format("{}{}", Constants::SDL_INIT_ERROR, SDL_GetError()));
     }
 }
 /**
@@ -99,21 +99,21 @@ void Visualizer::createWindow(){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(error) << "Failed to create sdlWindow_" << SDL_GetError();
 #endif
-        throw std::runtime_error(fmt::format("Failed to create sdlWindow_: {}", SDL_GetError()));
+        throw std::runtime_error(fmt::format("{}{}", Constants::WINDOW_CREATION_ERROR, SDL_GetError()));
     }
 }
 /**
  * @brief Creates an SDL renderer for the window.
  */
 void Visualizer::createRenderer(){
-    sdlRenderer_ = SDL_CreateRenderer(sdlWindow_, -1, SDL_RENDERER_ACCELERATED);
+    sdlRenderer_ = SDL_CreateRenderer(sdlWindow_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if(!sdlRenderer_){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(error) << "Failed to create sdlRenderer_" << SDL_GetError();
 #endif
-        throw std::runtime_error(fmt::format("Failed to create sdlRenderer_: {}", SDL_GetError()));
+        throw std::runtime_error(fmt::format("{}{}", Constants::RENDERER_CREATION_ERROR, SDL_GetError()));
     }
-    SDL_SetRenderDrawColor(sdlRenderer_, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(sdlRenderer_, Constants::RENDER_COLOR_R, Constants::RENDER_COLOR_G, Constants::RENDER_COLOR_B, Constants::RENDER_COLOR_A);
 }
 /**
  * @brief Initializes the SDL_ttf library for font rendering.
@@ -123,14 +123,14 @@ void Visualizer::initializeTTF(){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(error) << "SDL_ttf could not initialize" << TTF_GetError();
 #endif
-        throw std::runtime_error(fmt::format("SDL_ttf could not initialize: {}", TTF_GetError()));
+        throw std::runtime_error(fmt::format("{}{}",Constants::FONT_LOAD_ERROR, TTF_GetError()));
     }
-    fpsFont_ = TTF_OpenFont("../fonts/HackNerdFont-Regular.ttf", 24);
+    fpsFont_ = TTF_OpenFont(Constants::FONT_PATH, Constants::FONT_SIZE);
     if(!fpsFont_){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(error) << "Failed to load font" << TTF_GetError();
 #endif
-        throw std::runtime_error(fmt::format("Failed to load font: {}", TTF_GetError()));
+        throw std::runtime_error(fmt::format("{}{}",Constants::FONT_LOAD_ERROR ,TTF_GetError()));
     }
 }
 /**
@@ -158,7 +158,9 @@ void Visualizer::handleEvents() {
  * Currently empty, but will be used for future state updates.
  */
 void Visualizer::update() {
-
+//    for(auto& square : squares_){
+//        square.update(windowWidth_, windowHeight_);
+//    }
 }
 /**
  * @brief Renders the current frame to the window.
@@ -171,6 +173,9 @@ void Visualizer::render() {
     SDL_SetRenderDrawColor(sdlRenderer_, 128, 0, 32, 255);
     SDL_RenderClear(sdlRenderer_);
 
+//    for(const auto& square: squares_){
+//        square.render(sdlRenderer_);
+//    }
     mazeRenderer_->render(windowWidth_, windowHeight_);
     fpsCounter_.update();
     fpsCounter_.render();
@@ -202,4 +207,7 @@ void Visualizer::clean() {
 void Visualizer::setMaze(std::shared_ptr<Maze> maze) {
     maze_ = std::move(maze);
     mazeRenderer_ = std::make_unique<MazeRenderer>(maze_, sdlRenderer_);
+}
+void Visualizer::addSquare(const Square &square) {
+    squares_.push_back(square);
 }
