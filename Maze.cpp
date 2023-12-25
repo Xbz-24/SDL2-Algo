@@ -9,6 +9,7 @@
 #include <limits>
 #include <utility>
 #include <fmt/core.h>
+#include <boost/log/trivial.hpp>
 
 /**
  * @brief Constructs a Maze object and initializes its structure.
@@ -20,7 +21,9 @@
  */
 Maze::Maze(int rows, int cols) : maze_(static_cast<unsigned long>(rows), std::vector<Cell>(
         static_cast<unsigned long>(cols))), rows_(rows) , cols_(cols) {
-    fmt::print("Creating Maze of size {}x{}\n", rows, cols);
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(info) << "Creating Maze of size " << rows << "x" << cols;
+#endif
     initializeMaze();
     generateMaze();
     fmt::print("Maze created and generated.\n");
@@ -31,6 +34,9 @@ Maze::Maze(int rows, int cols) : maze_(static_cast<unsigned long>(rows), std::ve
  * Sets up each cell in the maze grid with default wall values and visited status.
  */
 void Maze::initializeMaze() {
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(debug) << "Initializing Maze grid.";
+#endif
     maze_.resize(static_cast<std::size_t>(rows_), std::vector<Cell>(static_cast<std::size_t>(cols_)));
     for (auto& row : maze_) {
         for (auto& cell : row) {
@@ -48,6 +54,9 @@ void Maze::initializeMaze() {
  * Initiates the recursive maze generation algorithm.
  */
 void Maze::generateMaze() {
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(info) << "Generating Maze.";
+#endif
     generateMazeRecursive(0, 0);
     for (int r = 0; r < std::min(3, rows_); ++r) {
         for (int c = 0; c < std::min(3, cols_); ++c) {
@@ -69,7 +78,9 @@ void Maze::generateMaze() {
  * @param c Column index for the current cell.
  */
 void Maze::generateMazeRecursive(std::size_t r, std::size_t c) {
-    fmt::print("Generating maze_ at cell [{}, {}]\n", r, c);
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(trace) << "Generating maze at cell [" << r << ", " << c << "]";
+#endif
     std::vector<std::pair<std::ptrdiff_t , std::ptrdiff_t>> directions = {{1,0}, {-1,0}, {0,1},{0,-1}};
     std::random_shuffle(directions.begin(), directions.end());
     maze_[r][c].visited = true;

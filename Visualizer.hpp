@@ -123,18 +123,57 @@ private:
      */
     void initializeSDLComponents();
 
+    /**
+     * @brief Shared pointer to the maze being visualized.
+     */
     std::shared_ptr<Maze> maze_;
+    /**
+     * @brief Flag indicating whether the visualizer is running.
+     */
     bool running_;
+    /**
+     * @brief Pointer to the SDL window.
+     */
     SDL_Window *sdlWindow_;
+    /**
+     * @brief Pointer to the SDL renderer
+     */
     SDL_Renderer *sdlRenderer_;
+    /**
+     * @brief Width of the SDL window.
+     */
     int windowWidth_;
+    /**
+     * @brief Height of the SDL window.
+     */
     int windowHeight_;
+    /**
+     * @brief Pointer to the TTF font used for rendering text.
+     */
     TTF_Font *fpsFont_;
+    /**
+     * @brief FPSCounter object for displaying frame rate.
+     */
     FPSCounter fpsCounter_;
+    /**
+     * @brief Renderer for the maze.
+     */
     std::unique_ptr<MazeRenderer> mazeRenderer_;
+    /**
+     * @brief Title of the SDL window.
+     */
     const char* windowTitle_;
+    /**
+     * @brief X-position of the SDL window.
+     */
     int windowPosX_;
+    /**
+     * @brief Y-position of the SDL window.
+     */
     int windowPosY_;
+    /**
+     * @brief Indicates if the window is fullscreen.
+     */
     bool isFullscreen_;
 };
 #endif //ALGOVISUALIZER_VISUALIZER_HPP
