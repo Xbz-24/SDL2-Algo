@@ -2,11 +2,25 @@ cmake_minimum_required(VERSION 3.25)
 project(AlgoVisualizer)
 set(CMAKE_CXX_STANDARD 23)
 
-find_package(SDL2 REQUIRED)
 find_package(PkgConfig REQUIRED)
-find_package(SDL2_ttf REQUIRED)
-find_package(Boost REQUIRED COMPONENTS container graph)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_ttf QUIET)
+if(SDL2_TTF_FOUND)
+    message(STATUS "Using SDL2_ttf from find_package")
+    set(SDL2_TTF_INCLUDE_DIRS ${SDL2_TTF_INCLUDE_DIR})
+    set(SDL2_TTF_LIBRARIES ${SDL2_TTF_LIBRARIES})
+else()
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
+    message(STATUS "Using SDL2_ttf from pkg-config")
+endif()
+find_package(Boost REQUIRED COMPONENTS container graph log)
 find_package(fmt REQUIRED)
+
+option(ENABLE_LOGGING "Enable detailed logging" OFF)
+if(ENABLE_LOGGING)
+    add_compile_definitions(ENABLE_LOGGING)
+endif()
 
 message("SDL2_INCLUDE_DIRS: ${SDL2_INCLUDE_DIRS}")
 message("SDL2_LIBRARIES: ${SDL2_LIBRARIES}")
@@ -20,9 +34,9 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${Boost_INCLUD
 add_library(boost_container_wrapper INTERFACE)
 target_link_libraries(boost_container_wrapper INTERFACE Boost::container)
 
-add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp FPSCounter.cpp FPSCounter.hpp MazeRenderer.cpp MazeRenderer.hpp)
+add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp FPSCounter.cpp FPSCounter.hpp MazeRenderer.cpp MazeRenderer.hpp Constants.hpp)
 
-target_link_libraries(AlgoVisualizer ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} Boost::graph boost_container_wrapper fmt::fmt)
+target_link_libraries(AlgoVisualizer ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} Boost::graph Boost::log boost_container_wrapper fmt::fmt)
 
 if(MSVC)
     target_compile_options(AlgoVisualizer PRIVATE

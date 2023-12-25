@@ -6,6 +6,7 @@
  */
 #include "Visualizer.hpp"
 #include <fmt/core.h>
+#include <boost/log/trivial.hpp>
 
 #include <utility>
 /**
@@ -34,12 +35,17 @@ Visualizer::Visualizer(const char* title, int xpos, int ypos, int width, int hei
         windowPosX_(xpos),
         windowPosY_(ypos),
         isFullscreen_(fullscreen){
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(info) << "Initializing Visualizer with title: " << title;
+#endif
     try{
         initializeSDLComponents();
         running_ = true;
     }
     catch(const std::runtime_error& e){
-        std::cerr << "Initialization error: " << e.what() << std::endl;
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(error) << "Initialization error:" << e.what();
+#endif
         running_ = false;
         return;
     }
@@ -49,6 +55,9 @@ Visualizer::Visualizer(const char* title, int xpos, int ypos, int width, int hei
  * Cleans up resources used by the Visualizer.
  */
 Visualizer::~Visualizer() {
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(info) << "Cleaning up Visualizer resources.";
+#endif
     clean();
 }
 /**
@@ -74,6 +83,9 @@ void Visualizer::initializeSDLComponents(){
  */
 void Visualizer::initializeSDL(){
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0){
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(error) << "SDL could not initialize" << SDL_GetError();
+#endif
         throw std::runtime_error(fmt::format("SDL could not initialize: {}", SDL_GetError()));
     }
 }
@@ -84,6 +96,9 @@ void Visualizer::createWindow(){
     Uint32 flags = isFullscreen_ ? SDL_WINDOW_MAXIMIZED : 0;
     sdlWindow_ = SDL_CreateWindow(windowTitle_, windowPosX_, windowPosY_, windowWidth_, windowHeight_, flags);
     if(!sdlWindow_){
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(error) << "Failed to create sdlWindow_" << SDL_GetError();
+#endif
         throw std::runtime_error(fmt::format("Failed to create sdlWindow_: {}", SDL_GetError()));
     }
 }
@@ -93,6 +108,9 @@ void Visualizer::createWindow(){
 void Visualizer::createRenderer(){
     sdlRenderer_ = SDL_CreateRenderer(sdlWindow_, -1, SDL_RENDERER_ACCELERATED);
     if(!sdlRenderer_){
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(error) << "Failed to create sdlRenderer_" << SDL_GetError();
+#endif
         throw std::runtime_error(fmt::format("Failed to create sdlRenderer_: {}", SDL_GetError()));
     }
     SDL_SetRenderDrawColor(sdlRenderer_, 255, 255, 255, 255);
@@ -102,10 +120,16 @@ void Visualizer::createRenderer(){
  */
 void Visualizer::initializeTTF(){
     if(TTF_Init() == -1){
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(error) << "SDL_ttf could not initialize" << TTF_GetError();
+#endif
         throw std::runtime_error(fmt::format("SDL_ttf could not initialize: {}", TTF_GetError()));
     }
     fpsFont_ = TTF_OpenFont("../fonts/HackNerdFont-Regular.ttf", 24);
     if(!fpsFont_){
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(error) << "Failed to load font" << TTF_GetError();
+#endif
         throw std::runtime_error(fmt::format("Failed to load font: {}", TTF_GetError()));
     }
 }
@@ -113,10 +137,16 @@ void Visualizer::initializeTTF(){
  * @brief Handles SDL events, such as window closing.
  */
 void Visualizer::handleEvents() {
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(trace) << "Handling SDL events.";
+#endif
     SDL_Event event;
     SDL_PollEvent(&event);
     switch(event.type){
         case SDL_QUIT:
+#ifndef ENABLE_LOGGING
+            BOOST_LOG_TRIVIAL(info) << "Received SDL_QUIT event.";
+#endif
             running_ = false;
             break;
         default:
@@ -135,7 +165,9 @@ void Visualizer::update() {
  * This includes clearing the renderer, drawing the maze and the FPS counter, and presenting the renderer.
  */
 void Visualizer::render() {
-    fmt::print("Rendering frame...\n");
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(debug) << "Rendering frame.";
+#endif
     SDL_SetRenderDrawColor(sdlRenderer_, 128, 0, 32, 255);
     SDL_RenderClear(sdlRenderer_);
 
@@ -144,7 +176,9 @@ void Visualizer::render() {
     fpsCounter_.render();
 
     SDL_RenderPresent(sdlRenderer_);
-    fmt::print("Frame rendered.\n");
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(debug) << "Frame rendered.";
+#endif
 }
 /**
  * @brief Cleans up all SDL-related resources.

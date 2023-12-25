@@ -6,6 +6,7 @@
  */
 #include "MazeRenderer.hpp"
 #include <fmt/core.h>
+#include <boost/log/trivial.hpp>
 /**
  * @brief Constructs a MazeRenderer object.
  * Initializes the MazeRenderer with a shared pointer to a Maze object and a SDL_Renderer.
@@ -17,7 +18,9 @@
 MazeRenderer::MazeRenderer(std::shared_ptr<Maze> maze_ptr, SDL_Renderer* renderer_ptr):
         maze_(std::move(maze_ptr)),
         sdlRenderer_(renderer_ptr){
-
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(debug) << "MazeRenderer constructor called.";
+#endif
 }
 /**
  * @brief Renders the maze to the SDL window.
@@ -28,14 +31,20 @@ MazeRenderer::MazeRenderer(std::shared_ptr<Maze> maze_ptr, SDL_Renderer* rendere
  */
 void MazeRenderer::render(int windowWidth, int windowHeight) {
     if(!maze_){
-        fmt::print("Maze object is null.\n");
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(warning) << "Maze object is null. Rendering aborted.";
+#endif
         return;
     }
-    fmt::print("Rendering maze_...\n");
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(info) << "Rendering maze...";
+#endif
     int mazeSquareSize = std::min(windowWidth, windowHeight) - 100;
     int cellWidth = mazeSquareSize / maze_->getCols();
     int cellHeight = mazeSquareSize / maze_->getRows();
-    fmt::print("Cell dimensions: {}x{}\n", cellWidth, cellHeight);
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(debug) << "Cell dimensions: " << cellWidth << "x" << cellHeight;
+#endif
     int wallThickness = 4;
     int startX = (windowWidth - (cellWidth * maze_->getCols())) / 2;
     int startY = (windowHeight - (cellHeight * maze_->getRows())) / 2;
@@ -58,6 +67,9 @@ void MazeRenderer::render(int windowWidth, int windowHeight) {
  * @param wallThickness Thickness of the walls of the cell.
  */
 void MazeRenderer::drawCell(std::size_t row, std::size_t col, int startX, int startY, int cellWidth, int cellHeight, int wallThickness) {
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(trace) << "Drawing cell at [" << row << ", " << col << "].";
+#endif
     const auto &cell = maze_->getMaze()[row][col];
     int x = startX + static_cast<int>(col) * cellWidth;
     int y = startY + static_cast<int>(row) * cellHeight;
