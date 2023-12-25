@@ -30,6 +30,7 @@
  * @brief MazeRenderer class for visualizing the maze.
  */
 #include "MazeRenderer.hpp"
+#include "Square.hpp"
 #include <memory>
 
 /**
@@ -101,6 +102,8 @@ public:
      * @return true if the visualizer is currently running, false otherwise.
      */
     [[nodiscard]] bool running() const;
+    void addSquare(const Square& square);
+
 private:
     /**
      * @brief Initializes the SDl library.
@@ -175,5 +178,6 @@ private:
      * @brief Indicates if the window is fullscreen.
      */
     bool isFullscreen_;
+    std::vector<Square> squares_;
 };
 #endif //ALGOVISUALIZER_VISUALIZER_HPP
