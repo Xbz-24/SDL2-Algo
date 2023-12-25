@@ -1,14 +1,35 @@
 //
 // Created by daily on 23-12-23.
 //
-
+/**
+ * @file Visualizer.hpp
+ * @brief Include dependencies for the Visualizer class.
+ */
 #ifndef ALGOVISUALIZER_VISUALIZER_HPP
 #define ALGOVISUALIZER_VISUALIZER_HPP
+/**
+ * @brief SDL2 main header for window, rendering, and event handling.
+ */
 #include "SDL2/SDL.h"
+/**
+ * @brief SDL2 extension for TrueType font rendering.
+ */
 #include "SDL2/SDL_ttf.h"
+/**
+ * @brief Standard IO stream objects.
+ */
 #include <iostream>
+/**
+ * @brief Maze class for maze representation and management.
+ */
 #include "Maze.hpp"
+/**
+ * @brief FPSCounter class for rendering frames per second information.
+ */
 #include "FPSCounter.hpp"
+/**
+ * @brief MazeRenderer class for visualizing the maze.
+ */
 #include "MazeRenderer.hpp"
 #include <memory>
 
@@ -82,10 +103,25 @@ public:
      */
     [[nodiscard]] bool running() const;
 private:
+    /**
+     * @brief Initializes the SDl library.
+     */
     void initializeSDL();
+    /**
+     * @brief Creates the SDL window based on stored parameters.
+     */
     void createWindow();
+    /**
+     * @brief Creates a SDL renderer for the window.
+     */
     void createRenderer();
+    /**
+     * @brief Initializes the SDL_ttf library for font rendering.
+     */
     void initializeTTF();
+    /**
+     * @brief Initializes all SDL components used by the Visualizer.
+     */
     void initializeSDLComponents();
 
     std::shared_ptr<Maze> maze_;
