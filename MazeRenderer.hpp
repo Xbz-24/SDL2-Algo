@@ -17,7 +17,6 @@ class MazeRenderer {
 public:
     MazeRenderer(const MazeRenderer&) = delete;
     MazeRenderer& operator=(const MazeRenderer&) = delete;
-
    /**
     * @brief Constructs a MazeRenderer.
     *

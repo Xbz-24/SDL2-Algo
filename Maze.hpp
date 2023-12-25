@@ -1,19 +1,16 @@
 //
 // Created by daily on 24-12-23.
 //
-
 #ifndef ALGOVISUALIZER_MAZE_HPP
 #define ALGOVISUALIZER_MAZE_HPP
 #include <vector>
 #include <cstdlib>
-
 /**
  * @brief Represents a maze with cells and walls.
  *
  * The Maze class stores a maze grid where each cell can have walls on four sides.
  * It provides functionality to generate and access the maze structure.
  */
-
 class Maze {
 public:
     /**
@@ -28,7 +25,6 @@ public:
         bool bottomWall;
         bool rightWall;
     };
-
     /**
      * @brief Constructs a Maze object with specified dimensions.
      * @param rows Number of rows in the maze.
