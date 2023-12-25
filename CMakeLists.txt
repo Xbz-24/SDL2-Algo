@@ -17,9 +17,12 @@ endif()
 find_package(Boost REQUIRED COMPONENTS container graph log)
 find_package(fmt REQUIRED)
 
-option(ENABLE_LOGGING "Enable detailed logging" OFF)
-if(ENABLE_LOGGING)
-    add_compile_definitions(ENABLE_LOGGING)
+find_package(Catch2 QUIET)
+if(Catch2_FOUND)
+    message(STATUS "Using Catch2 from find_package")
+else()
+    pkg_search_module(CATCH2 REQUIRED IMPORTED_TARGET catch2)
+    message(STATUS "Using Catch2 from pkg-config")
 endif()
 
 message("SDL2_INCLUDE_DIRS: ${SDL2_INCLUDE_DIRS}")
@@ -28,76 +31,33 @@ message("SDL2_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS}")
 message("SDL2_TTF_LIBRARIES: ${SDL2_TTF_LIBRARIES}")
 message("Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
 message("Boost_LIBRARIES: ${Boost_LIBRARIES}")
+message(STATUS "Catch2 Version: ${Catch2_VERSION}")
+
+option(ENABLE_LOGGING "Enable detailed logging" OFF)
+if(ENABLE_LOGGING)
+    add_compile_definitions(ENABLE_LOGGING)
+endif()
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_library(boost_container_wrapper INTERFACE)
 target_link_libraries(boost_container_wrapper INTERFACE Boost::container)
 
-add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp FPSCounter.cpp FPSCounter.hpp MazeRenderer.cpp MazeRenderer.hpp Constants.hpp)
-
+# main
+add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp FPSCounter.cpp FPSCounter.hpp MazeRenderer.cpp MazeRenderer.hpp Constants.hpp test_1.cpp)
 target_link_libraries(AlgoVisualizer ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} Boost::graph Boost::log boost_container_wrapper fmt::fmt)
 
-if(MSVC)
-    target_compile_options(AlgoVisualizer PRIVATE
-            /W4
-            /WX
-            /w14242
-            /w14254
-            /w14263
-            /w14265
-            /w14287
-            /we4289
-            /w14296
-            /w14311
-            /w14545
-            /w14546
-            /w14547
-            /w14549
-            /w14555
-            /w14619
-            /w14640
-            /w14826
-            /w14905
-            /w14906
-            /w14928
-            /w15038
-            )
+#test
+add_executable(tests test_1.cpp)
+target_compile_definitions(tests PRIVATE TEST_BUILD)
+if(Catch2_FOUND)
+    target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 else()
-    target_compile_options(AlgoVisualizer PRIVATE
-            -Wall
-            -Wextra
-            -pedantic
-            -Werror
-            -Weffc++
-            -Wconversion
-            -Wsign-conversion
-            -Wmisleading-indentation
-            -Wduplicated-cond
-            -Wduplicated-branches
-            -Wlogical-op
-            -Wnull-dereference
-            -Wuseless-cast
-            -Wdouble-promotion
-            -Wformat=2
-            -Wshadow
-            -Wfloat-equal
-            -Wcast-align
-            -Wcast-qual
-            -Wwrite-strings
-            -Wmissing-declarations
-            -Woverloaded-virtual
-            -Wnoexcept
-            -Wnon-virtual-dtor
-            -Wstrict-overflow=5
-            -Wswitch-default
-            -Wswitch-enum
-            -Winit-self
-            -Wredundant-decls
-            -Wundef
-            -Winline
-            -Wunreachable-code
-            -Wdeprecated
-            -Wsuggest-override
-            )
+    target_link_libraries(tests PRIVATE PkgConfig::CATCH2)
+endif()
+
+if(MSVC)
+    target_compile_options(AlgoVisualizer PRIVATE /W4 /WX /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 /w15038)
+else()
+    target_compile_options(AlgoVisualizer PRIVATE -Wall -Wextra -pedantic -Werror -Weffc++ -Wconversion -Wsign-conversion -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wuseless-cast -Wdouble-promotion -Wformat=2 -Wshadow -Wfloat-equal -Wcast-align -Wcast-qual -Wwrite-strings -Wmissing-declarations -Woverloaded-virtual -Wnoexcept -Wnon-virtual-dtor -Wstrict-overflow=5 -Wswitch-default -Wswitch-enum -Winit-self -Wredundant-decls -Wundef -Winline -Wunreachable-code -Wdeprecated -Wsuggest-override)
 endif()
