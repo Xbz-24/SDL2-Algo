@@ -19,15 +19,14 @@ public:
 
     Maze(int rows, int cols);
     void generateMaze();
-    [[nodiscard]] int getRows() const { return m_rows; }
-    [[nodiscard]] int getCols() const { return m_cols; }
+    [[nodiscard]] int getRows() const { return rows_; }
+    [[nodiscard]] int getCols() const { return cols_; }
     [[nodiscard]] const std::vector<std::vector<Cell>>& getMaze() const;
 
 private:
-    std::vector<std::vector<Cell>> m_maze;
-    int m_rows;
-    int m_cols;
-
+    std::vector<std::vector<Cell>> maze_;
+    int rows_;
+    int cols_;
     void initializeMaze();
     void generateMazeRecursive(std::size_t r, std::size_t c);
 };
