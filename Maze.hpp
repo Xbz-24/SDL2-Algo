@@ -1,9 +1,18 @@
-//
-// Created by daily on 24-12-23.
-//
+/**
+ * @file Maze.hpp
+ * @brief Class definition for Maze, representing a maze with cells and walls
+ * @date Created on 24-12-2023.
+ * @author Renato Chavez
+ */
 #ifndef ALGOVISUALIZER_MAZE_HPP
 #define ALGOVISUALIZER_MAZE_HPP
+/**
+ * Standard library vector for dynamic array management.
+ */
 #include <vector>
+/**
+ * Standard library cstdlib for general purpose functions.
+ */
 #include <cstdlib>
 /**
  * @brief Represents a maze with cells and walls.
@@ -57,8 +66,18 @@ private:
      */
     void generateMazeRecursive(std::size_t r, std::size_t c);
 
+    /**
+     * @brief 2D grid representing the maze.
+     * A vector of vectorof cells, where each cell represents a position in the maze.
+     */
     std::vector<std::vector<Cell>> maze_;
+    /**
+     * @brief Number of rows in the maze.
+     */
     int rows_;
+    /**
+     * @brief Number of columns in the maze.
+     */
     int cols_;
 };
 #endif //ALGOVISUALIZER_MAZE_HPP

@@ -1,8 +1,13 @@
-//
-// Created by daily on 23-12-23.
-//
+/**
+ * @file Visualizer.cpp
+ * @brief
+ * @date Created on 23-12-23
+ * @author Renato Chavez
+ */
 #include "Visualizer.hpp"
 #include <fmt/core.h>
+
+#include <utility>
 /**
  * @brief Constructs a Visualizer object.
  * Initializes the Visualizer with given window parameters and initializes SDL components.
@@ -122,7 +127,9 @@ void Visualizer::handleEvents() {
  * @brief Updates the state of the visualizer.
  * Currently empty, but will be used for future state updates.
  */
-void Visualizer::update() {}
+void Visualizer::update() {
+
+}
 /**
  * @brief Renders the current frame to the window.
  * This includes clearing the renderer, drawing the maze and the FPS counter, and presenting the renderer.
@@ -159,6 +166,6 @@ void Visualizer::clean() {
  * @param maze Shared pointer to the Maze object to be visualized.
  */
 void Visualizer::setMaze(std::shared_ptr<Maze> maze) {
-    maze_ = maze;
+    maze_ = std::move(maze);
     mazeRenderer_ = std::make_unique<MazeRenderer>(maze_, sdlRenderer_);
 }

@@ -1,9 +1,8 @@
-//
-// Created by daily on 23-12-23.
-//
 /**
  * @file Visualizer.hpp
  * @brief Include dependencies for the Visualizer class.
+ * @date Created on 23-12-23.
+ * @author Renato Chavez
  */
 #ifndef ALGOVISUALIZER_VISUALIZER_HPP
 #define ALGOVISUALIZER_VISUALIZER_HPP
@@ -106,7 +105,7 @@ private:
     /**
      * @brief Initializes the SDl library.
      */
-    void initializeSDL();
+    static void initializeSDL();
     /**
      * @brief Creates the SDL window based on stored parameters.
      */

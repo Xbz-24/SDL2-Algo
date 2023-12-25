@@ -1,7 +1,9 @@
-//
-// Created by daily on 24-12-23.
-//
-
+/**
+ * @file MazeRenderer.hpp
+ * @brief
+ * @date Created on 24-12-23.
+ * @author Renato Chavez
+ */
 #ifndef ALGOVISUALIZER_MAZERENDERER_HPP
 #define ALGOVISUALIZER_MAZERENDERER_HPP
 #include "Maze.hpp"
