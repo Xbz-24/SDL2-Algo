@@ -14,6 +14,8 @@
  * Standard library cstdlib for general purpose functions.
  */
 #include <cstdlib>
+#include <cryptopp/osrng.h>
+#include <sodium.h>
 /**
  * @brief Represents a maze with cells and walls.
  *
@@ -21,6 +23,7 @@
  * It provides functionality to generate and access the maze structure.
  */
 #include "IRenderable.hpp"
+#include <random>
 class Maze : public IRenderable{
 public:
     /**
@@ -86,5 +89,18 @@ private:
     int windowHeight_;
 
     void drawCell(std::size_t row, std::size_t col, int startX, int startY, int cellWidth, int cellHeight, int wallThickness, SDL_Renderer* sdlRenderer);
+
+    class SodiumRandom {
+    public:
+        using result_type = uint32_t;
+
+        static constexpr result_type min() { return 0; }
+        static constexpr result_type max() { return UINT32_MAX; }
+
+        result_type operator()() {
+            return randombytes_random();
+        }
+    };
+
 };
 #endif //ALGOVISUALIZER_MAZE_HPP
