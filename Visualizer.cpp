@@ -30,12 +30,13 @@ Visualizer::Visualizer(const char* title, int xpos, int ypos, int width, int hei
         windowHeight_(height),
         fpsFont_(nullptr) ,
         fpsCounter_(nullptr, nullptr),
-        mazeRenderer_(nullptr),
         windowTitle_(title),
         windowPosX_(xpos),
         windowPosY_(ypos),
         isFullscreen_(fullscreen),
-        squares_(){
+        squares_(),
+        renderables_()
+        {
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(info) << "Initializing Visualizer with title: " << title;
 #endif
@@ -158,9 +159,9 @@ void Visualizer::handleEvents() {
  * Currently empty, but will be used for future state updates.
  */
 void Visualizer::update() {
-//    for(auto& square : squares_){
-//        square.update(windowWidth_, windowHeight_);
-//    }
+    for(auto& renderable: renderables_){
+        renderable->update();
+    }
 }
 /**
  * @brief Renders the current frame to the window.
@@ -173,10 +174,10 @@ void Visualizer::render() {
     SDL_SetRenderDrawColor(sdlRenderer_, 128, 0, 32, 255);
     SDL_RenderClear(sdlRenderer_);
 
-//    for(const auto& square: squares_){
-//        square.render(sdlRenderer_);
-//    }
-    mazeRenderer_->render(windowWidth_, windowHeight_);
+    for(const auto& renderable : renderables_){
+        renderable->render(sdlRenderer_);
+    }
+    //mazeRenderer_->render(windowWidth_, windowHeight_);
     fpsCounter_.update();
     fpsCounter_.render();
 
@@ -206,8 +207,8 @@ void Visualizer::clean() {
  */
 void Visualizer::setMaze(std::shared_ptr<Maze> maze) {
     maze_ = std::move(maze);
-    mazeRenderer_ = std::make_unique<MazeRenderer>(maze_, sdlRenderer_);
+    //mazeRenderer_ = std::make_unique<MazeRenderer>(maze_, sdlRenderer_);
 }
-void Visualizer::addSquare(const Square &square) {
-    squares_.push_back(square);
+void Visualizer::addRenderable(std::shared_ptr<IRenderable> renderable) {
+    renderables_.push_back(renderable);
 }
