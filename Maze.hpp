@@ -20,7 +20,8 @@
  * The Maze class stores a maze grid where each cell can have walls on four sides.
  * It provides functionality to generate and access the maze structure.
  */
-class Maze {
+#include "IRenderable.hpp"
+class Maze : public IRenderable{
 public:
     /**
      * @brief Represents a single cell in the maze.
@@ -50,7 +51,9 @@ public:
     [[nodiscard]] int getRows() const { return rows_; }
     [[nodiscard]] int getCols() const { return cols_; }
     [[nodiscard]] const std::vector<std::vector<Cell>>& getMaze() const;
-
+    void update() override{}
+    void render(SDL_Renderer* renderer) override;
+    void setScreenDimensions(int screenWidth, int screenHeight);
 private:
     /**
      * @brief Initializes the maze grid.
@@ -79,5 +82,9 @@ private:
      * @brief Number of columns in the maze.
      */
     int cols_;
+    int windowWidth_;
+    int windowHeight_;
+
+    void drawCell(std::size_t row, std::size_t col, int startX, int startY, int cellWidth, int cellHeight, int wallThickness, SDL_Renderer* sdlRenderer);
 };
 #endif //ALGOVISUALIZER_MAZE_HPP

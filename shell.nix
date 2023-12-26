@@ -10,7 +10,7 @@ pkgs.mkShell {
       pkgs.SDL2_ttf
       pkgs.pkg-config
       pkgs.boost
-      pkgs.boost183
+      unstable.boost183
       pkgs.cmake
       unstable.fmt
       pkgs.catch2_3

@@ -3,12 +3,13 @@
 //
 #ifndef ALGOVISUALIZER_SQUARE_HPP
 #define ALGOVISUALIZER_SQUARE_HPP
-#include <SDL2/SDL.h>
-class Square {
+#include "IRenderable.hpp"
+class Square : public IRenderable{
 public:
     Square(int x, int y, int size, SDL_Color color);
-    void update(int screenWidth, int screenHeight);
-    void render(SDL_Renderer* renderer) const;
+    void update() override;
+    void render(SDL_Renderer* renderer) override;
+    void setScreenDimensions(int screenWidth, int screenHeight);
 private:
     int x_;
     int y_;
@@ -16,5 +17,7 @@ private:
     SDL_Color color_;
     int velocityX_;
     int velocityY_;
+    int screenWidth_;
+    int screenHeight_;
 };
 #endif //ALGOVISUALIZER_SQUARE_HPP

@@ -20,7 +20,7 @@
  * @param cols Number of columns in the maze.
  */
 Maze::Maze(int rows, int cols) : maze_(static_cast<unsigned long>(rows), std::vector<Cell>(
-        static_cast<unsigned long>(cols))), rows_(rows) , cols_(cols) {
+        static_cast<unsigned long>(cols))), rows_(rows) , cols_(cols), windowWidth_(0), windowHeight_(0) {
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(info) << "Creating Maze of size " << rows << "x" << cols;
 #endif
@@ -139,4 +139,59 @@ void Maze::generateMazeRecursive(std::size_t r, std::size_t c) {
  */
 const std::vector<std::vector<Maze::Cell>>& Maze::getMaze() const {
     return maze_;
+}
+
+void Maze::drawCell(std::size_t row, std::size_t col, int startX, int startY, int cellWidth, int cellHeight, int wallThickness, SDL_Renderer* renderer) {
+    const auto &cell = maze_[row][col];
+    int x = startX + static_cast<int>(col) * cellWidth;
+    int y = startY + static_cast<int>(row) * cellHeight;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+    if (cell.topWall) {
+        SDL_Rect topWall = {x, y, cellWidth, wallThickness};
+        SDL_RenderFillRect(renderer, &topWall);
+    }
+    if (cell.leftWall) {
+        SDL_Rect leftWall = {x, y, wallThickness, cellHeight};
+        SDL_RenderFillRect(renderer, &leftWall);
+    }
+    if (cell.bottomWall) {
+        SDL_Rect bottomWall = {x, y + cellHeight - wallThickness, cellWidth, wallThickness};
+        SDL_RenderFillRect(renderer, &bottomWall);
+    }
+    if (cell.rightWall) {
+        SDL_Rect rightWall = {x + cellWidth - wallThickness, y, wallThickness, cellHeight};
+        SDL_RenderFillRect(renderer, &rightWall);
+    }
+}
+
+void Maze::render(SDL_Renderer* renderer){
+    if(!maze_.size()){
+#ifndef ENABLE_LOGGING
+        BOOST_LOG_TRIVIAL(warning) << "Maze object is null. Rendering aborted.";
+#endif
+        return;
+    }
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(info) << "Rendering maze...";
+#endif
+    int mazeSquareSize = std::min(windowWidth_, windowHeight_) - 100;
+    int cellWidth = mazeSquareSize / cols_;
+    int cellHeight = mazeSquareSize / rows_;
+#ifndef ENABLE_LOGGING
+    BOOST_LOG_TRIVIAL(debug) << "Cell dimensions: " << cellWidth << "x" << cellHeight;
+#endif
+    int wallThickness = 4;
+    int startX = (windowWidth_ - (cellWidth * cols_)) / 2;
+    int startY = (windowHeight_ - (cellHeight * rows_)) / 2;
+    for (std::size_t r = 0; r < static_cast<std::size_t>(rows_); r++) {
+        for (std::size_t c = 0; c < static_cast<std::size_t>(cols_); c++) {
+            drawCell(r, c, startX, startY, cellWidth, cellHeight, wallThickness, renderer);
+        }
+    }
+}
+
+void Maze::setScreenDimensions(int windowWidth, int windowHeight){
+    windowWidth_ = windowWidth;
+    windowHeight_ = windowHeight;
 }

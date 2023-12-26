@@ -29,7 +29,6 @@
 /**
  * @brief MazeRenderer class for visualizing the maze.
  */
-#include "MazeRenderer.hpp"
 #include "Square.hpp"
 #include <memory>
 
@@ -102,7 +101,7 @@ public:
      * @return true if the visualizer is currently running, false otherwise.
      */
     [[nodiscard]] bool running() const;
-    void addSquare(const Square& square);
+    void addRenderable(std::shared_ptr<IRenderable> renderable);
 
 private:
     /**
@@ -161,7 +160,7 @@ private:
     /**
      * @brief Renderer for the maze.
      */
-    std::unique_ptr<MazeRenderer> mazeRenderer_;
+    //std::unique_ptr<MazeRenderer> mazeRenderer_;
     /**
      * @brief Title of the SDL window.
      */
@@ -179,5 +178,6 @@ private:
      */
     bool isFullscreen_;
     std::vector<Square> squares_;
+    std::vector<std::shared_ptr<IRenderable>> renderables_;
 };
 #endif //ALGOVISUALIZER_VISUALIZER_HPP
