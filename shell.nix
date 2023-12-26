@@ -15,5 +15,7 @@ pkgs.mkShell {
       unstable.fmt
       pkgs.catch2_3
       pkgs.catch2
+      pkgs.cryptopp
+      pkgs.libsodium
   ];
 }

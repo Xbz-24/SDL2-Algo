@@ -10,6 +10,8 @@
 #include <utility>
 #include <fmt/core.h>
 #include <boost/log/trivial.hpp>
+#include <ctime>
+#include <cstdlib>
 
 /**
  * @brief Constructs a Maze object and initializes its structure.
@@ -20,10 +22,11 @@
  * @param cols Number of columns in the maze.
  */
 Maze::Maze(int rows, int cols) : maze_(static_cast<unsigned long>(rows), std::vector<Cell>(
-        static_cast<unsigned long>(cols))), rows_(rows) , cols_(cols), windowWidth_(0), windowHeight_(0) {
+        static_cast<unsigned long>(cols))), rows_(rows), cols_(cols) , windowWidth_(0), windowHeight_(0) {
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(info) << "Creating Maze of size " << rows << "x" << cols;
 #endif
+    //std::srand(static_cast<unsigned int>(std::time(nullptr)));
     initializeMaze();
     generateMaze();
     fmt::print("Maze created and generated.\n");
@@ -57,6 +60,7 @@ void Maze::generateMaze() {
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(info) << "Generating Maze.";
 #endif
+    //std::srand(static_cast<unsigned int>(std::time(nullptr)));
     generateMazeRecursive(0, 0);
     for (int r = 0; r < std::min(3, rows_); ++r) {
         for (int c = 0; c < std::min(3, cols_); ++c) {
@@ -82,7 +86,9 @@ void Maze::generateMazeRecursive(std::size_t r, std::size_t c) {
     BOOST_LOG_TRIVIAL(trace) << "Generating maze at cell [" << r << ", " << c << "]";
 #endif
     std::vector<std::pair<std::ptrdiff_t , std::ptrdiff_t>> directions = {{1,0}, {-1,0}, {0,1},{0,-1}};
-    std::random_shuffle(directions.begin(), directions.end());
+
+    SodiumRandom randomGen;
+    std::shuffle(directions.begin(), directions.end(), randomGen);
     maze_[r][c].visited = true;
 
     for(auto [dr, dc] : directions){

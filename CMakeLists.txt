@@ -17,12 +17,28 @@ endif()
 find_package(Boost REQUIRED COMPONENTS container graph log)
 find_package(fmt REQUIRED)
 
+find_package(CryptoPP QUIET)
+if(CryptoPP_FOUND)
+    message(STATUS "Found CryptoPP via find_package")
+else()
+    pkg_check_modules(CryptoPP REQUIRED libcryptopp)
+    message(STATUS "Found CryptoPP via pkg-config")
+endif()
+
 find_package(Catch2 QUIET)
 if(Catch2_FOUND)
     message(STATUS "Using Catch2 from find_package")
 else()
     pkg_search_module(CATCH2 REQUIRED IMPORTED_TARGET catch2)
     message(STATUS "Using Catch2 from pkg-config")
+endif()
+
+find_package(sodium QUIET)
+if(sodium_FOUND)
+    message(STATUS "Using libsodium from find_package")
+else()
+    pkg_check_modules(sodium REQUIRED libsodium)
+    message(STATUS "Using libsodium from pkg-config")
 endif()
 
 message("SDL2_INCLUDE_DIRS: ${SDL2_INCLUDE_DIRS}")
@@ -37,15 +53,20 @@ option(ENABLE_LOGGING "Enable detailed logging" OFF)
 if(ENABLE_LOGGING)
     add_compile_definitions(ENABLE_LOGGING)
 endif()
+#if(NOT MSVC AND CMAKE_BUILD_TYPE MATCHES Debug)
+#    set(SANITIZE_FLAGS "-fsanitize=address")
+#    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${SANITIZE_FLAGS}")
+#    set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} ${SANITIZE_FLAGS}")
+#endif()
 
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${sodium_INCLUDE_DIRS})
 
 add_library(boost_container_wrapper INTERFACE)
 target_link_libraries(boost_container_wrapper INTERFACE Boost::container)
 
 # main
 add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp FPSCounter.cpp FPSCounter.hpp Constants.hpp test_1.cpp Square.cpp Square.hpp IRenderable.hpp)
-target_link_libraries(AlgoVisualizer ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} Boost::graph Boost::log boost_container_wrapper fmt::fmt)
+target_link_libraries(AlgoVisualizer ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} Boost::graph Boost::log boost_container_wrapper fmt::fmt ${CryptoPP_LIBRARIES} ${sodium_LIBRARIES})
 
 #test
 add_executable(tests test_1.cpp)
@@ -55,6 +76,7 @@ if(Catch2_FOUND)
 else()
     target_link_libraries(tests PRIVATE PkgConfig::CATCH2)
 endif()
+
 
 if(MSVC)
     target_compile_options(AlgoVisualizer PRIVATE /W4 /WX /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 /w15038)
