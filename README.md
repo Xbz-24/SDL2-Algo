@@ -8,3 +8,5 @@ Added code refactoring so that rendering different things is trivial to add (sti
 
 
 ![image](https://github.com/Xbz-24/SDLAlgovisualizer/assets/68678258/368bb846-a229-4f9d-aa49-703580c5ebcc)
+
+![image](https://github.com/Xbz-24/SDLAlgovisualizer/assets/68678258/3079ab70-1f43-4e4a-bd0a-448869618716)
