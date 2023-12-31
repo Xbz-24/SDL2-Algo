@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <cryptopp/osrng.h>
 #include <sodium.h>
+#include <array>
 /**
  * @brief Represents a maze with cells and walls.
  *
@@ -31,13 +32,42 @@ public:
      *
      * Each cell has four walls and a visited flag, which can be used for maze generation algorithms.
      */
+
+    std::pair<int, int> farthestPoint_;
+    bool farthestPointSet_;
+
+    struct Point {
+        int row;
+        int col;
+        Point(int x , int y) : row(x), col(y) {}
+        bool operator ==(const Point& other) const{
+            return row == other.row && col == other.col;
+        }
+        Point operator+(const Point& other) const {
+            return {row + other.row, col + other.col};
+        }
+        bool operator<(const Point& other) const {
+            return std::tie(row, col) < std::tie(other.row, other.col);
+        }
+    };
+    std::vector<Point> path_;
+
+    static  std::array<Point, 4> directions;
     struct Cell {
         bool visited;
         bool topWall;
         bool leftWall;
         bool bottomWall;
         bool rightWall;
+        bool isBlocked(const Point& direction) const {
+            if(direction.row == -1 && topWall) return true;
+            if(direction.row == 1 && bottomWall) return true;
+            if(direction.col == -1 && leftWall) return true;
+            if(direction.col == 1 && rightWall) return true;
+            return false;
+        }
     };
+
     /**
      * @brief Constructs a Maze object with specified dimensions.
      * @param rows Number of rows in the maze.
@@ -57,6 +87,21 @@ public:
     void update() override{}
     void render(SDL_Renderer* renderer) override;
     void setScreenDimensions(int screenWidth, int screenHeight);
+    void handleMouseClick(Sint32 mouseX, Sint32 mouseY, SDL_Window* sdlWindow);
+    [[nodiscard]] std::pair<int, int> getStartPosition() const {
+        return startPosition_;
+    }
+    void findShortestPath(Point startPoint, Point endPoint);
+
+    bool isValid(const Point& p) const {
+        return p.row >= 0 && p.row < rows_ && p.col >= 0 && p.col < cols_;
+    }
+    bool isWall(const Point& current, const Point& direction) const {
+
+        return maze_[static_cast<unsigned long>(current.row)][static_cast<unsigned long>(current.col)].isBlocked(direction);
+    }
+    void traceBackPath(const std::map<Point, Point>& predecessor, const Point& start, const Point& end);
+
 private:
     /**
      * @brief Initializes the maze grid.
@@ -87,6 +132,10 @@ private:
     int cols_;
     int windowWidth_;
     int windowHeight_;
+    int wallThickness_;
+
+    std::pair<int, int> startPosition_;
+    bool startPositionSet_;
 
     void drawCell(std::size_t row, std::size_t col, int startX, int startY, int cellWidth, int cellHeight, int wallThickness, SDL_Renderer* sdlRenderer);
 

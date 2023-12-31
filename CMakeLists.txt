@@ -65,7 +65,7 @@ add_library(boost_container_wrapper INTERFACE)
 target_link_libraries(boost_container_wrapper INTERFACE Boost::container)
 
 # main
-add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp FPSCounter.cpp FPSCounter.hpp Constants.hpp test_1.cpp Square.cpp Square.hpp IRenderable.hpp)
+add_executable(AlgoVisualizer main.cpp Visualizer.cpp Visualizer.hpp Maze.cpp Maze.hpp FPSCounter.cpp FPSCounter.hpp Constants.hpp test_1.cpp Square.cpp Square.hpp IRenderable.hpp CustomCursor.cpp CustomCursor.h)
 target_link_libraries(AlgoVisualizer ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} Boost::graph Boost::log boost_container_wrapper fmt::fmt ${CryptoPP_LIBRARIES} ${sodium_LIBRARIES})
 
 #test
