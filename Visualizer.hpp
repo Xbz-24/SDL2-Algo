@@ -102,8 +102,13 @@ public:
      */
     [[nodiscard]] bool running() const;
     void addRenderable(std::shared_ptr<IRenderable> renderable);
+    [[nodiscard]] SDL_Window* getWindow() const {
+        return sdlWindow_;
+    }
+
 
 private:
+    Uint32 windowID_;
     /**
      * @brief Initializes the SDl library.
      */

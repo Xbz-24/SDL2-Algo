@@ -6,6 +6,7 @@
  */
 #include "Visualizer.hpp"
 #include "Constants.hpp"
+#include "Maze.hpp"
 #include <fmt/core.h>
 #include <boost/log/trivial.hpp>
 #include <utility>
@@ -22,13 +23,14 @@
  * @param fullscreen
  */
 Visualizer::Visualizer(const char* title, int xpos, int ypos, int width, int height, bool fullscreen):
+        windowID_(0),
         maze_(nullptr),
         running_(false),
         sdlWindow_(nullptr),
         sdlRenderer_(nullptr),
         windowWidth_(width),
-        windowHeight_(height),
-        fpsFont_(nullptr) ,
+        windowHeight_(height) ,
+        fpsFont_(nullptr),
         fpsCounter_(nullptr, nullptr),
         windowTitle_(title),
         windowPosX_(xpos),
@@ -73,7 +75,7 @@ bool Visualizer::running() const{
  * @brief Initializes all SDL components used by the Visualizer.
  */
 void Visualizer::initializeSDLComponents(){
-    initializeSDL();
+    //initializeSDL();
     createWindow();
     createRenderer();
     initializeTTF();
@@ -96,6 +98,7 @@ void Visualizer::initializeSDL(){
 void Visualizer::createWindow(){
     Uint32 flags = isFullscreen_ ? SDL_WINDOW_MAXIMIZED : 0;
     sdlWindow_ = SDL_CreateWindow(windowTitle_, windowPosX_, windowPosY_, windowWidth_, windowHeight_, flags);
+    windowID_ = SDL_GetWindowID(sdlWindow_);
     if(!sdlWindow_){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(error) << "Failed to create sdlWindow_" << SDL_GetError();
@@ -142,16 +145,35 @@ void Visualizer::handleEvents() {
     BOOST_LOG_TRIVIAL(trace) << "Handling SDL events.";
 #endif
     SDL_Event event;
-    SDL_PollEvent(&event);
-    switch(event.type){
-        case SDL_QUIT:
-#ifndef ENABLE_LOGGING
-            BOOST_LOG_TRIVIAL(info) << "Received SDL_QUIT event.";
-#endif
+    while(SDL_PollEvent(&event)) {
+        if(event.type == SDL_QUIT){
             running_ = false;
-            break;
-        default:
-            break;
+        }
+        if(event.window.windowID != windowID_) continue;
+
+        switch(event.type){
+            case SDL_QUIT:
+#ifndef ENABLE_LOGGING
+                BOOST_LOG_TRIVIAL(info) << "Received SDL_QUIT event.";
+#endif
+                running_ = false;
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if(event.button.button == SDL_BUTTON_RIGHT){
+                    running_ = false;
+                }
+                if(event.button.button == SDL_BUTTON_LEFT){
+                    std::cout << "Mouse Clicked at: X=" << event.button.x << ", Y=" << event.button.y << std::endl;
+                    if(maze_) {
+                        maze_->handleMouseClick(event.button.x, event.button.y, sdlWindow_);
+                    } else {
+                        std::cout << "Maze object is null." << std::endl;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
 /**
