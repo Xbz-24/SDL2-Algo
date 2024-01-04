@@ -4,6 +4,7 @@
 #include "CustomCursor.h"
 #include "Tetris.h"
 #include "BubbleSort.h"
+#include "InsertionSort.h"
 
 int main() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -77,32 +78,45 @@ int main() {
     std::cout << "Created Square Window with ID:"<< SDL_GetWindowID(squareVisualizer->getWindow()) << '\n';
 
     auto bubbleSortVisualizer = std::make_unique<Visualizer>("Bubble Sort Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
-    auto bubbleSort = std::make_shared<BubbleSort>(100);
+    auto bubbleSort = std::make_shared<BubbleSort>(200);
     bubbleSort->setScreenDimensions(800, 600);
     bubbleSort->startSort();
     bubbleSortVisualizer->addRenderable(bubbleSort);
     std::cout << "Created Bubble Sort Window with ID:" << SDL_GetWindowID(bubbleSortVisualizer->getWindow()) << '\n';
 
-    while (mazeVisualizer->running() && squareVisualizer->running() && tetrisVisualizer->running() && bubbleSortVisualizer->running()) {
+
+    auto insertionSortVisualizer = std::make_unique<Visualizer>("Insertion Sort Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
+    auto insertionSort = std::make_shared<InsertionSort>(200);
+    insertionSort->setScreenDimensions(800, 600);
+    insertionSort->startSort();
+    insertionSortVisualizer->addRenderable(insertionSort);
+    std::cout << "Created Insertion Sort Window with ID:" << SDL_GetWindowID(insertionSortVisualizer->getWindow()) << '\n';
+
+
+
+    while (mazeVisualizer->running() && squareVisualizer->running() && tetrisVisualizer->running() && bubbleSortVisualizer->running() && insertionSortVisualizer->running() ) {
         mazeVisualizer->handleEvents();
         squareVisualizer->handleEvents();
         tetrisVisualizer->handleEvents();
         bubbleSortVisualizer->handleEvents();
+        insertionSortVisualizer->handleEvents();
 
         mazeVisualizer->update();
         squareVisualizer->update();
         tetrisVisualizer->update();
         bubbleSortVisualizer->update();
+        insertionSortVisualizer->update();
 
         mazeVisualizer->render();
         tetrisVisualizer->render();
         squareVisualizer->render();
         bubbleSortVisualizer->render();
+        insertionSortVisualizer->render();
     }
     mazeVisualizer->clean();
     squareVisualizer->clean();
     tetrisVisualizer->clean();
     bubbleSortVisualizer->clean();
+    insertionSortVisualizer->clean();
     SDL_Quit();
-    return 0;
 }

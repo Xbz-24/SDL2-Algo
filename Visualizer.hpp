@@ -189,5 +189,6 @@ private:
     std::vector<Square> squares_;
     std::vector<std::shared_ptr<IRenderable>> renderables_;
     std::shared_ptr<Tetris> tetrisGame_;
+    bool isFocused;
 };
 #endif //ALGOVISUALIZER_VISUALIZER_HPP

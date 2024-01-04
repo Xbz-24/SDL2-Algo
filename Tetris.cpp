@@ -110,10 +110,9 @@ void Tetris::rotatePiece() {
         }
         int pivotType = currentPiece.getType();
         rotatedPositions.push_back(Block(rotatedX, rotatedY, pivotType));
-
-        if(canRotate){
-            currentPiece.setBlocks(rotatedPositions);
-        }
+    }
+    if(canRotate){
+        currentPiece.setBlocks(rotatedPositions);
     }
 }
 void Tetris::dropPiece() {

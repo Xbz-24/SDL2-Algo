@@ -38,7 +38,8 @@ Visualizer::Visualizer(const char* title, int xpos, int ypos, int width, int hei
         isFullscreen_(fullscreen),
         squares_(),
         renderables_(),
-        tetrisGame_(nullptr)
+        tetrisGame_(nullptr),
+        isFocused(false)
         {
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(info) << "Initializing Visualizer with title: " << title;
@@ -111,7 +112,7 @@ void Visualizer::createWindow(){
  * @brief Creates an SDL renderer for the window.
  */
 void Visualizer::createRenderer(){
-    sdlRenderer_ = SDL_CreateRenderer(sdlWindow_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    sdlRenderer_ = SDL_CreateRenderer(sdlWindow_, -1, SDL_RENDERER_SOFTWARE);
     if(!sdlRenderer_){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(error) << "Failed to create sdlRenderer_" << SDL_GetError();
@@ -147,10 +148,17 @@ void Visualizer::handleEvents() {
 #endif
     SDL_Event event;
     while(SDL_PollEvent(&event)) {
+        if(event.type == SDL_WINDOWEVENT && event.window.windowID == windowID_) {
+            if(event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
+                isFocused = true;
+            } else if(event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                isFocused = false;
+            }
+        }
         if(event.type == SDL_QUIT){
             running_ = false;
         }
-        if(event.window.windowID != windowID_) continue;
+        if(!isFocused || event.window.windowID != windowID_) continue;
 
         switch(event.type){
             case SDL_QUIT:
@@ -211,7 +219,8 @@ void Visualizer::render() {
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(debug) << "Rendering frame.";
 #endif
-    SDL_SetRenderDrawColor(sdlRenderer_, 128, 0, 32, 255);
+//    SDL_SetRenderDrawColor(sdlRenderer_, 128, 0, 32, 255);
+    SDL_SetRenderDrawColor(sdlRenderer_, 0, 0, 0, 255);
     SDL_RenderClear(sdlRenderer_);
 
     for(const auto& renderable : renderables_){
