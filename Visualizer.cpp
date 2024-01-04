@@ -29,15 +29,16 @@ Visualizer::Visualizer(const char* title, int xpos, int ypos, int width, int hei
         sdlWindow_(nullptr),
         sdlRenderer_(nullptr),
         windowWidth_(width),
-        windowHeight_(height) ,
-        fpsFont_(nullptr),
+        windowHeight_(height),
+        fpsFont_(nullptr) ,
         fpsCounter_(nullptr, nullptr),
         windowTitle_(title),
         windowPosX_(xpos),
         windowPosY_(ypos),
         isFullscreen_(fullscreen),
         squares_(),
-        renderables_()
+        renderables_(),
+        tetrisGame_(nullptr)
         {
 #ifndef ENABLE_LOGGING
     BOOST_LOG_TRIVIAL(info) << "Initializing Visualizer with title: " << title;
@@ -158,6 +159,23 @@ void Visualizer::handleEvents() {
 #endif
                 running_ = false;
                 break;
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym) {
+                    case SDLK_LEFT:
+                        tetrisGame_->movePieceLeft();
+                        break;
+                    case SDLK_RIGHT:
+                        tetrisGame_->movePieceRight();
+                        break;
+                    case SDLK_UP:
+                        tetrisGame_->rotatePiece();
+                        break;
+                    case SDLK_DOWN:
+                        break;
+                    default:
+                        break;
+                }
+                break;
             case SDL_MOUSEBUTTONDOWN:
                 if(event.button.button == SDL_BUTTON_RIGHT){
                     running_ = false;
@@ -199,7 +217,6 @@ void Visualizer::render() {
     for(const auto& renderable : renderables_){
         renderable->render(sdlRenderer_);
     }
-    //mazeRenderer_->render(windowWidth_, windowHeight_);
     fpsCounter_.update();
     fpsCounter_.render();
 
@@ -233,4 +250,7 @@ void Visualizer::setMaze(std::shared_ptr<Maze> maze) {
 }
 void Visualizer::addRenderable(std::shared_ptr<IRenderable> renderable) {
     renderables_.push_back(renderable);
+}
+void Visualizer::setTetris(std::shared_ptr<Tetris> tetris) {
+    tetrisGame_ = std::move(tetris);
 }

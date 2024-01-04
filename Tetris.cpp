@@ -50,7 +50,6 @@ void Tetris::render(SDL_Renderer* renderer) {
         SDL_Rect rect = {block.getX() * cellSize, block.getY() * cellSize, cellSize, cellSize};
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(renderer, &rect);
-
     }
     SDL_RenderPresent(renderer);
 }

@@ -30,6 +30,7 @@
  * @brief MazeRenderer class for visualizing the maze.
  */
 #include "Square.hpp"
+#include "Tetris.h"
 #include <memory>
 
 /**
@@ -66,6 +67,9 @@ public:
      * Cleans up SDL resources, including the window, renderer, and font.
      */
     ~Visualizer();
+
+    void setTetris(std::shared_ptr<Tetris> tetris);
+
     /**
      * @brief Processes SDL events.
      *
@@ -184,5 +188,6 @@ private:
     bool isFullscreen_;
     std::vector<Square> squares_;
     std::vector<std::shared_ptr<IRenderable>> renderables_;
+    std::shared_ptr<Tetris> tetrisGame_;
 };
 #endif //ALGOVISUALIZER_VISUALIZER_HPP
