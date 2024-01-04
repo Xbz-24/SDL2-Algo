@@ -27,25 +27,25 @@
  * @param cols Number of columns in the maze.
  */
 Maze::Maze(int rows, int cols) :
-    farthestPoint_(),
-          farthestPointSet_(),
-          path_() ,
-          maze_(static_cast<unsigned long>(rows),
-          std::vector<Cell>(static_cast<unsigned long>(cols))),
-          rows_(rows),
-          cols_(cols),
-          windowWidth_(0),
-          windowHeight_(0),
-          wallThickness_(0),
-          startPosition_(),
-          startPositionSet_(false){
+        farthestPoint_(),
+        farthestPointSet_(),
+        path_() ,
+        maze_(static_cast<unsigned long>(rows),
+    std::vector<Cell>(static_cast<unsigned long>(cols))),
+        rows_(rows),
+        cols_(cols),
+        windowWidth_(0),
+        windowHeight_(0),
+        wallThickness_(0),
+        startPosition_(),
+        startPositionSet_(false){
 #ifndef ENABLE_LOGGIN
     BOOST_LOG_TRIVIAL(info) << "Creating Maze of size " << rows << "x" << cols;
 #endif
     //std::srand(static_cast<unsigned int>(std::time(nullptr)));
     initializeMaze();
     generateMaze();
-    fmt::print("Maze created and generated.\n");
+//    fmt::print("Maze created and generated.\n");
 }
 /**
  * @brief Initializes the maze grid with default cell values.
@@ -80,12 +80,12 @@ void Maze::generateMaze() {
     generateMazeRecursive(0, 0);
     for (int r = 0; r < std::min(3, rows_); ++r) {
         for (int c = 0; c < std::min(3, cols_); ++c) {
-            fmt::print("Cell[{},{}]: Top:{} Left:{} Bottom:{} Right:{}\n",
-                       r, c,
-                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].topWall,
-                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].leftWall,
-                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].bottomWall,
-                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].rightWall);
+//            fmt::print("Cell[{},{}]: Top:{} Left:{} Bottom:{} Right:{}\n",
+//                       r, c,
+//                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].topWall,
+//                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].leftWall,
+//                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].bottomWall,
+//                       maze_[static_cast<unsigned long>(r)][static_cast<unsigned long>(c)].rightWall);
         }
     }
 }
@@ -197,6 +197,9 @@ int dotX_ = -1;
 int dotY_ = -1;
 
 void Maze::render(SDL_Renderer* renderer){
+    SDL_SetRenderDrawColor(renderer, 137, 196, 244, 255);
+    SDL_RenderClear(renderer);
+
     if(!maze_.size()){
 #ifndef ENABLE_LOGGING
         BOOST_LOG_TRIVIAL(warning) << "Maze object is null. Rendering aborted.";

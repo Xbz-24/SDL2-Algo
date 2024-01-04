@@ -27,8 +27,7 @@ private:
     int lastSwapIndex;
     unsigned long long swapCount;
     unsigned long long comparisonCount;
-    bool finalIterationStarted;
-    int finalIterationCount;
+
     bool greenIterationStarted;
     bool whiteIterationStarted;
     int iterationCount;
